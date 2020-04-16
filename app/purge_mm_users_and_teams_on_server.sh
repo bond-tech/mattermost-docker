@@ -51,7 +51,7 @@ echo "Mattermost users found: $user_info"
 echo "---------------------------------------------------------------"
 echo "Loop and remove each mattermost users except super admin user."
 for email in $(echo "${user_info}" | jq -r '.[] | @base64'); do
-    _jq() { echo ${email} | base64 -decode | jq -r ${1}
+    _jq() { echo ${email} | base64 -d | jq -r ${1}
     }
     email=$(_jq '.email')
     if [ "$login_id" != "$email" ] && [ "qa@bond.tech" != "$email" ] && [ "admin@bond.tech" != "$email" ];
