@@ -13,6 +13,7 @@ ARG MM_BINARY=
 
 # Install some needed packages
 RUN apk add --no-cache \
+	bash \
 	ca-certificates \
 	curl \
 	jq \
@@ -42,6 +43,8 @@ USER mattermost
 
 #Healthcheck to make sure container is ready
 HEALTHCHECK CMD curl --fail http://localhost:8000 || exit 1
+
+COPY purge_mm_users_and_teams_on_server.sh /
 
 # Configure entrypoint and command
 COPY entrypoint.sh /
